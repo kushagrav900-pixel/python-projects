@@ -24,6 +24,25 @@ text.grid(columnspan=4, row=1)
 
 calc = ""
 
+# Functions
+
+def function(symbol):
+    global calc
+    calc += str(symbol)
+    text.config(state="normal")
+    text.delete("1.0", tk.END)
+    text.insert("1.0", calc)
+    text.config(state="disabled")
+
+def equivalent():
+    global calc
+    calc = str(eval(calc))
+    text.config(state="normal")
+    text.delete("1.0", tk.END)
+    text.insert("1.0", calc)
+    text.config(state="disabled")
+
+    
 
 # Buttons
 plus = tk.Button(frame, width=2, height=1, text="+", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("+"))
@@ -38,14 +57,41 @@ division.grid(row=2,column=2)
 multiplication = tk.Button(frame, width=2, height=1, text="*", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("*"))
 multiplication.grid(row=2,column=3)
 
+one = tk.Button(frame, width=2, height=1, text="1", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("1"))
+one.grid(row=3,column=0)
 
-def function(symbol):
-    global calc
-    calc += str(symbol)
-    text.config(state="normal")
-    text.delete("1.0", tk.END)
-    text.insert("1.0", calc)
-    text.config(state="disabled")
+two = tk.Button(frame, width=2, height=1, text="2", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("2"))
+two.grid(row=3,column=1)
+
+three = tk.Button(frame, width=2, height=1, text="3", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("3"))
+three.grid(row=3,column=2)
+
+four = tk.Button(frame, width=2, height=1, text="4", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("4"))
+four.grid(row=3,column=3)
+
+five = tk.Button(frame, width=2, height=1, text="5", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("5"))
+five.grid(row=4,column=0)
+
+six = tk.Button(frame, width=2, height=1, text="6", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("6"))
+six.grid(row=4,column=1)
+
+seven = tk.Button(frame, width=2, height=1, text="7", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("7"))
+seven.grid(row=4,column=2)
+
+eight = tk.Button(frame, width=2, height=1, text="8", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("8"))
+eight.grid(row=4,column=3)
+
+nine = tk.Button(frame, width=2, height=1, text="9", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("9"))
+nine.grid(row=5,column=0)
+
+zero = tk.Button(frame, width=2, height=1, text="0", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: function("0"))
+zero.grid(row=5,column=1)
+
+equate = tk.Button(frame, width=2, height=1, text="=", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: equivalent())
+equate.grid(row=5,columnspan=2, column=2)
+
+
+
 
 
 # Frame Configure
