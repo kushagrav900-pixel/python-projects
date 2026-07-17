@@ -42,6 +42,14 @@ def equivalent():
     text.insert("1.0", calc)
     text.config(state="disabled")
 
+def clearing():
+    global calc
+    calc = ""
+    text.config(state="normal")
+    text.delete("1.0", tk.END)
+    text.insert("1.0", calc)
+    text.config(state="disabled")
+    
     
 
 # Buttons
@@ -88,7 +96,11 @@ zero = tk.Button(frame, width=2, height=1, text="0", font=("Arial", 30), bg="#1A
 zero.grid(row=5,column=1)
 
 equate = tk.Button(frame, width=2, height=1, text="=", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: equivalent())
-equate.grid(row=5,columnspan=2, column=2)
+equate.grid(row=5, column=2)
+
+clear = tk.Button(frame, width=2, height=1, text="C", font=("Arial", 30), bg="#1A1A1A", bd=0, highlightbackground="#1A1A1A", relief="flat", command=lambda: clearing())
+clear.grid(row=5, column=3)
+
 
 
 
