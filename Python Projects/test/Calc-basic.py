@@ -7,13 +7,13 @@ root.title("Calculator")
 root.resizable(True, True)
 
 # Framing
-frame = tk.Frame(root, bg="#1A1A1A")
-frame.config()
+frame = tk.Frame(root, bg="#1A1A1A", padx=15, pady=15)
 frame.pack(fill="both", expand=True)
 
 # Label
-Label = tk.Label(frame, text="Calculator", bg="#1A1A1A", fg="lightblue", font=("Arial", 20))
-Label.grid(row=0, column=0, columnspan=4)
+Label = tk.Label(frame, text="Calculator", bg="#1A1A1A", fg="lightblue", font=("Arial", 20, "bold"))
+
+Label.grid(row=0, column=0)
 
 # Text
 text = tk.Text(frame, bg="#1A1A1A", width=16, height=1, font=("Arial", 30), bd=0, highlightbackground="#1A1A1A", relief="flat")
