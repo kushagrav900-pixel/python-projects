@@ -3,6 +3,10 @@ import tkinter as tk
 
 # GUI sectiion
 
+tokens_list = []
+output_postfix = []
+
+
 root = tk.Tk()
 root.title("Postfix Calculator")
 root.geometry("310x450+150+100")
@@ -33,18 +37,27 @@ for k, text in enumerate(buttons_list):
 
 expression = ""
 def function(char):
-    global expression
+    global expression, tokens_list, output_postfix
     if char == "AC":
+        tokens_list = []
+        output_postfix = []
         expression = ""
         update_output(expression)
     elif char == "=":
-        pass
+        tokens_list = tokenisation()
+        output_postfix = infix_to_postfix()
+        expression = evalutaion()
+        update_output(expression)
+        expression = str(expression)
+        tokens_list = []
+        output_postfix = []
+        
     else:
         expression += char
         update_output(expression)
 
 def tokenisation():
-    global expression
+    global expression, tokens_list
     tokens_list = []
     i = 0
     while i < len(expression):
@@ -57,36 +70,70 @@ def tokenisation():
             tokens_list.append(current_number)
             current_number = ""
         else:
-            if expression[i] == "**":
+            if expression[i] == "*" and expression[i + 1] == "*":
                 tokens_list.append("**")
                 i += 2
             else:
                 tokens_list.append(expression[i])
                 i += 1
+    return tokens_list
 
 def infix_to_postfix():
-        output_postfix = []
-        operator_stack = []
-        output_postfix.append(tokens_list[0])
-        operator_stack.append(tokens_list[1])
-        output_postfix.append(tokens_list[2])
-        m = 2
-        while m < len(tokens_list):
-            m += 1
-            if power(tokens_list[m]) >= power(operator_stack[-1]):
-                operator_stack.append(tokens_list[m])
-            else:
-                j = 0
-                while power(tokens_list[m]) < power(operator_stack[-1]):
-                    output_postfix.append(operator_stack.pop())
-                    j += 1
-                
-                operator_stack.append(tokens_list[m])
-            m += 1
-            output_postfix.append(tokens_list[m])
-        
-        output_postfix.extend(operator_stack[::-1])
-                    
+
+    global output_postfix, tokens_list
+    operator_stack = []
+    output_postfix = []
+    output_postfix.append(tokens_list[0])
+    operator_stack.append(tokens_list[1])
+    output_postfix.append(tokens_list[2])
+    m = 3
+    while m < len(tokens_list):
+        if power(tokens_list[m]) >= power(operator_stack[-1]):
+            operator_stack.append(tokens_list[m])
+        else:
+            j = 0
+            while power(tokens_list[m]) < power(operator_stack[-1]):
+                output_postfix.append(operator_stack.pop())
+                j += 1
+            operator_stack.append(tokens_list[m])
+        m += 1
+        output_postfix.append(tokens_list[m])
+        m += 1
+    output_postfix.extend(operator_stack[::-1])
+    return output_postfix
+
+def evalutaion():
+    k = 0
+    global output_postfix
+    while k < len(output_postfix):
+        if output_postfix[k] == "+":
+            output_postfix[k] = float(output_postfix[k - 1]) + float(output_postfix[k - 2])
+            output_postfix.pop(k-1)
+            output_postfix.pop(k-2)
+            k = -1
+        elif output_postfix[k] == "-":
+            output_postfix[k] = float(output_postfix[k - 2]) - float(output_postfix[k - 1])
+            output_postfix.pop(k-1)
+            output_postfix.pop(k-2)
+            k = -1
+        elif output_postfix[k] == "*":
+            output_postfix[k] = float(output_postfix[k - 1]) * float(output_postfix[k - 2])
+            output_postfix.pop(k-1)
+            output_postfix.pop(k-2)
+            k = -1
+        elif output_postfix[k] == "/":
+            output_postfix[k] = float(output_postfix[k - 2]) / float(output_postfix[k - 1])
+            output_postfix.pop(k-1)
+            output_postfix.pop(k-2)
+            k = -1
+        elif output_postfix[k] == "**":
+            output_postfix[k] = float(output_postfix[k - 2]) ** float(output_postfix[k - 1])
+            output_postfix.pop(k-1)
+            output_postfix.pop(k-2)
+            k = -1
+        k += 1
+    
+    return output_postfix[0]           
                 
         
 
