@@ -44,20 +44,19 @@ def function(char):
         expression = ""
         update_output(expression)
     elif char == "=":
-        tokens_list = tokenisation()
-        output_postfix = infix_to_postfix()
-        expression = evalutaion()
+        tokens = tokenisation(expression)
+        output = infix_to_postfix(tokens)
+        expression = evalutaion(output)
         update_output(expression)
         expression = str(expression)
-        tokens_list = []
+        tokens = []
         output_postfix = []
         
     else:
         expression += char
         update_output(expression)
 
-def tokenisation():
-    global expression, tokens_list
+def tokenisation(expression):
     tokens_list = []
     i = 0
     while i < len(expression):
@@ -78,33 +77,31 @@ def tokenisation():
                 i += 1
     return tokens_list
 
-def infix_to_postfix():
-
-    global output_postfix, tokens_list
+def infix_to_postfix(tokens):
     operator_stack = []
     output_postfix = []
-    output_postfix.append(tokens_list[0])
-    operator_stack.append(tokens_list[1])
-    output_postfix.append(tokens_list[2])
+    output_postfix.append(tokens[0])
+    operator_stack.append(tokens[1])
+    output_postfix.append(tokens[2])
     m = 3
-    while m < len(tokens_list):
-        if power(tokens_list[m]) >= power(operator_stack[-1]):
-            operator_stack.append(tokens_list[m])
+    while m < len(tokens):
+        if power(tokens[m]) >= power(operator_stack[-1]):
+            operator_stack.append(tokens[m])
         else:
             j = 0
-            while power(tokens_list[m]) < power(operator_stack[-1]):
+            while power(tokens[m]) < power(operator_stack[-1]):
                 output_postfix.append(operator_stack.pop())
                 j += 1
-            operator_stack.append(tokens_list[m])
+            operator_stack.append(tokens[m])
         m += 1
-        output_postfix.append(tokens_list[m])
+        output_postfix.append(tokens[m])
         m += 1
     output_postfix.extend(operator_stack[::-1])
     return output_postfix
 
-def evalutaion():
+def evalutaion(output):
+    output_postfix = output
     k = 0
-    global output_postfix
     while k < len(output_postfix):
         if output_postfix[k] == "+":
             output_postfix[k] = float(output_postfix[k - 1]) + float(output_postfix[k - 2])
