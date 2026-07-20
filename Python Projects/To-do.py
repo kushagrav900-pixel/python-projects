@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 import customtkinter as tk
 
 # Root window configuration
@@ -13,10 +14,27 @@ frame_root.pack(fill="both", expand=True)
 label_task = tk.CTkLabel(frame_root, text="Task List", font=("San Francisco", 20, "bold"), fg_color="#272727", text_color="#C7EBF0")
 label_task.pack(side="top",pady=10, padx=10, fill="x")
 
+# Reading Tasks
+with open("tasks.txt", "r") as file:
+    line = file.readlines()
+i = 0
+while i < len(line):
+    tasks = tk.CTkCheckBox(frame_root, text=(line[i].strip()), font=("San Francisco", 20, "bold"), fg_color="#272727", text_color="#C7EBF0")
+    tasks.pack(side="top",pady=10, padx=10, fill="x")
+    i+=1
+
 
 # Creating Tasks
 button_add = tk.CTkButton(frame_root, text="Add Task", font=("San Francisco", 20, "bold"), fg_color="#C7EBF0", text_color="#1A1A1A", hover_color="#A5DFE8", border_width=0, command=lambda: Add())
 button_add.pack(side="bottom",pady=10, padx=10, fill="x")
+
+button_deleteall = tk.CTkButton(frame_root, text="Delete All Tasks", font=("San Francisco", 20, "bold"), fg_color="#C7EBF0", text_color="#1A1A1A", hover_color="#A5DFE8", border_width=0, command=lambda:Deleteall())
+button_deleteall.pack(side="bottom",pady=10, padx=10, fill="x")
+
+def Deleteall():
+    with open("tasks.txt", "w") as filed:
+        pass
+
 
 
 def Add():
@@ -41,6 +59,12 @@ def Add():
         text = a
         tasks = tk.CTkCheckBox(frame_root, text=text, font=("San Francisco", 20, "bold"), fg_color="#272727", text_color="#C7EBF0")
         tasks.pack(side="top",pady=10, padx=10, fill="x")
+
+        with open("tasks.txt", "a") as files:
+            files.write(text + "\n")
+
+
+
         
         # Unleash Hell Destroy everything
     
