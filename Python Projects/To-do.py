@@ -41,7 +41,11 @@ def Add():
         text = a
         tasks = tk.CTkCheckBox(frame_root, text=text, font=("San Francisco", 20, "bold"), fg_color="#272727", text_color="#C7EBF0")
         tasks.pack(side="top",pady=10, padx=10, fill="x")
+        
+        # Unleash Hell Destroy everything
+    
         root_add.destroy()
+
     
         
 
